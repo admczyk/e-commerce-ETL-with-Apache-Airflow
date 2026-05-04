@@ -1,9 +1,34 @@
 from airflow.decorators import task
+from airflow.models import Variable
 import requests
 import json
-from airflow.models import Variable
+from dotenv import load_dotenv
+#import os
 
 WEBSITE_PATH = Variable.get("WEBSITE_PATH")
+
+load_dotenv()
+
+#WEBSITE_PATH = os.getenv("WEBSITE_PATH")
+
+def clean_user_data(data):
+    users = data["users"]
+    clean_users = []
+
+    for u in users:
+        clean_users.append({
+            "id": u["id"],
+            "firstName": u["firstName"],
+            "lastName": u["lastName"],
+            "gender": u["gender"],
+            "birthDate": u["birthDate"],
+            "city": u["address"]["city"],
+            "state": u["address"]["state"],
+            "postalCode": u["address"]["postalCode"],
+            "country": u["address"]["country"]
+        })
+
+    return clean_users
 
 @task
 def get_data(category):
@@ -17,32 +42,17 @@ def get_data(category):
     Returns:
         list: data about set category
     """
-    url = f"{WEBSITE_PATH}{category}"
+    url = f"{WEBSITE_PATH}{category}?limit=0"
     
     try:
         response = requests.get(url)
         response.raise_for_status()
 
         data = response.json()
+
+        if category == "users":
+            data = clean_user_data(data)
+
         return data
-    except Exception as e:
-        raise e
-
-@task
-def save_to_json(data, category):
-    """
-    Saves provided data to a JSON file
-
-    Args:
-        data (list): data saved to JSON file
-        category (string): sets one of three possible filenames
-                            (products/carts/users)
-    
-    Returns:
-        None
-    """
-    try:
-        with open(f"/opt/airflow/data/raw/{category}_data.json", "w") as file:
-            json.dump(data, file, indent=2)
     except Exception as e:
         raise e
