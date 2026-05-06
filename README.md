@@ -71,13 +71,14 @@ mini_data_warehouse/
 - Docker
 - Git / Github
 
-## Airflow DAGs
+## Data pipeline architecture
+### Airflow DAGs
 The project uses Apache Airflow to orchestrate data workflows through Directed Acyclic Graphs (DAGs). Each DAG defines a sequence of tasks and their dependencies, enabling automated and repeatable data processing.
 - __create_table.py__ - this DAG is responsible for initializing the database schema
 - __etl_carts.py__ - this is one of the main DAGs that implements the end-to-end ETL pipeline for carts data. It is activated every hour.
 - __etl_products_users.py__ - this is one of the main DAGs that implements the end-to-end ETL pipeline for products and users data. It is activated once every day.
 
-## ETL Pipeline
+### ETL Pipeline
 The ETL process consists of:
 #### 1. Extract
 - Fetches data using HTTP requests
