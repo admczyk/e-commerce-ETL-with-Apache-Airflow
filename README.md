@@ -158,8 +158,8 @@ Login using username and password set in environment variables.
 #### 7. Run the Pipeline
 1. Enable the DAG `create_product_table`
 2. Trigger it manually to create SQL table
-3. Enable the DAG `etl_pipeline`
-4. Trigger it manually or wait for the scheduler
+3. Enable the DAG `etl_carts` and `etl_products_users`
+4. Trigger them manually or wait for the scheduler
 
 #### 8. Verify Results
 - Raw data - `data/raw/`
