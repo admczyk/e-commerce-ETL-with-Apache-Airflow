@@ -37,8 +37,11 @@ def clean_and_validate_carts_products_data(carts_df):
 def transform_carts_products_data(carts_df):
     carts_products_df = carts_df.explode("products").reset_index(drop=True)
     products_df = pd.json_normalize(carts_products_df["products"])
+    products_df = products_df.reset_index()
+    products_df["index"] = products_df["index"] + 1
 
     products_df = products_df.rename(columns={
+        "index": "cart_item_id",
         "id": "product_id", 
         "total": "product_total",
         "price": "product_price",
@@ -46,10 +49,15 @@ def transform_carts_products_data(carts_df):
         "discountedTotal": "product_total_discounted"
     })
 
+    products_df.insert(0, "cart_item_id", products_df.pop("cart_item_id"))
+
     products_df = products_df.drop(columns=["title", "thumbnail", "discountPercentage"])
 
     carts_products_df = carts_products_df.drop(columns=["products"]).reset_index(drop=True)
     carts_products_df = carts_products_df.join(products_df)
+
+    carts_products_df.insert(0, "cart_item_id", carts_products_df.pop("cart_item_id"))
+    carts_products_df.insert(2, "product_id", carts_products_df.pop("product_id"))
 
     normalized_cart_products_df = normalize_carts_products_dtypes(carts_products_df)
 
