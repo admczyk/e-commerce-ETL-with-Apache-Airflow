@@ -1,6 +1,7 @@
 from airflow.decorators import task
 import pandas as pd
 import datetime as dt
+import json
 
 def normalize_product_dtypes(df):
     df["product_id"] = pd.to_numeric(df["product_id"], errors="coerce").astype("Int64")
@@ -37,18 +38,17 @@ def clean_and_validate_product_data(df):
 
     other_cols = [col for col in df.columns if col not in required_cols]
 
-    str_cols = df[other_cols].select_dtypes(include=["object"])
+    str_cols = df[other_cols].select_dtypes(include=["object", "string"])
     missing_mask = str_cols.isnull().any(axis=1)
     if missing_mask.any():
-        print(f"Found {missing_mask.sum()} rows with missing strings. Filled them with \"not set\".")
-        df[str_cols.columns] = str_cols.fillna("not set")
+        print(f"Found {missing_mask.sum()} rows with missing strings. Filled them with \"Not set\".")
+        df[str_cols.columns] = str_cols.fillna("Not set")
 
     num_cols = df[other_cols].select_dtypes(include="number")
     missing_mask = num_cols.isnull().mean()
     for col, ratio in missing_mask.items():
         if ratio == 0:
             continue
-
         if ratio < 0.05:
             print(f"Deleted records with missing {col} value.")
             df = df.dropna(subset=[col])
@@ -67,7 +67,7 @@ def clean_and_validate_product_data(df):
     return df
 
 def add_new_product_values(data):
-    data["final_price"] = data["price"] * (1-data["discount_percentage"])
+    data["final_price"] = data["price"] * (1- (data["discount_percentage"] / 100))
     data["price_bucket"] = pd.cut(
         data["price"],
         bins=[0, 100, 500, 2000, 10000, float("inf")],
