@@ -124,7 +124,7 @@ The dashboard is divided into three main analytical views: **Carts Analysis**, *
 > Due to the lack of time-related data in the extracted dataset, time-based analysis of the e-commerce business could not be performed.
 
 ### Carts Dashboard
-[Carts Dashboard](https://github.com/admczyk/Mini-Data-Warehouse-for-E-commerce-With-Apache-Airflow/blob/main/img/Carts_Dashboard_IMG.png)
+![Carts Dashboard](https://github.com/admczyk/Mini-Data-Warehouse-for-E-commerce-With-Apache-Airflow/blob/main/img/Carts_Dashboard_IMG.png)
 The Carts view focuses on understanding purchasing behavior at the basket level, providing insights into cart composition, value distribution and overall sales performance.
 #### Key metrics:
 - **Total Sales** - overall revenue generated from all carts
@@ -138,7 +138,7 @@ The Carts view focuses on understanding purchasing behavior at the basket level,
 - **Top 10 Carts by Sales** - identification of highest-value transactions
 
 ### Products Dashboard
-[Products Dashboard](https://github.com/admczyk/Mini-Data-Warehouse-for-E-commerce-With-Apache-Airflow/blob/main/img/Products_Dashboard_IMG.png)
+![Products Dashboard](https://github.com/admczyk/Mini-Data-Warehouse-for-E-commerce-With-Apache-Airflow/blob/main/img/Products_Dashboard_IMG.png)
 The Products view focuses on product performance, customer ratings and profitability across categories and subcategories.
 #### Key metrics:
 - **Total Units Sold**
@@ -151,7 +151,7 @@ The Products view focuses on product performance, customer ratings and profitabi
 - **Profit by Subcategory** - profitability breakdown across product categories
 
 ### Users Dashboard
-[Users Dashboard](https://github.com/admczyk/Mini-Data-Warehouse-for-E-commerce-With-Apache-Airflow/blob/main/img/Users_Dashboard_IMG.png)
+![Users Dashboard](https://github.com/admczyk/Mini-Data-Warehouse-for-E-commerce-With-Apache-Airflow/blob/main/img/Users_Dashboard_IMG.png)
 The Users view focuses on customer count,behavior, age group breakdown and gender distribution.
 #### Key metrics:
 - **Total Users**
